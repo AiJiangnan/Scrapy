@@ -12,15 +12,19 @@ import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
+csslist = """
+    <link href="css/basic.css" rel="stylesheet" type="text/css">
+    <link href="css/classic.css" rel="stylesheet" type="text/css">
+    <link href="css/pydoctheme.css" rel="stylesheet" type="text/css">
+    <link href="css/pygments.css" rel="stylesheet" type="text/css">
+"""
+
 html_template = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link href="css/basic.css" rel="stylesheet" type="text/css">
-    <link href="css/classic.css" rel="stylesheet" type="text/css">
-    <link href="css/pydoctheme.css" rel="stylesheet" type="text/css">
-    <link href="css/pygments.css" rel="stylesheet" type="text/css">
+    {css}
 </head>
 <body>
 {content}
@@ -31,7 +35,7 @@ html_template = """
 
 def parse_url_to_html(body, name):
     html = str(body)
-    html = html_template.format(content=html)
+    html = html_template.format(content=html,css=csslist)
     html = html.encode("utf-8")
     with open(name, 'wb') as f:
         f.write(html)

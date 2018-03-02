@@ -58,7 +58,10 @@ class PythondocPipeline(object):
         name = item['name'][0]
         parse_url_to_html(item['data'][0], name + '.html')
         self.htmls.append(name + '.html')
-        save_pdf(name + '.html', name + '.pdf')
+        try:
+            save_pdf(name + '.html', name + '.pdf')
+        except:
+            pass
         self.pdfs.append(name + '.pdf')
         return item
 

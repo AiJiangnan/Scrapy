@@ -7,7 +7,6 @@
 import pdfkit
 import re
 import os
-import uuid
 from PyPDF2 import PdfFileMerger
 import sys
 reload(sys)
@@ -50,25 +49,24 @@ class PythondocPipeline(object):
         self.pdfs = []
 
     def process_item(self, item, spider):
-        # name = item['name'][0]
-        # name = str(uuid.uuid1())
-        # parse_url_to_html(item['data'][0], name + '.html')
-        # self.htmls.append(name + '.html')
-        # try:
-        #     save_pdf(name + '.html', name + '.pdf')
-        # except:
-        #     pass
-        # self.pdfs.append(name + '.pdf')
+        name = item['name'][0]
+        parse_url_to_html(item['data'][0], name + '.html')
+        self.htmls.append(name + '.html')
+        try:
+            save_pdf(name + '.html', name + '.pdf')
+        except:
+            pass
+        self.pdfs.append(name + '.pdf')
         return item
 
-    # def close_spider(self, spider):
-        # name = 'Scrapy教程'
-        # merger = PdfFileMerger()
-        # for pdf in self.pdfs:
-        #     merger.append(open(pdf, 'rb'))
-        # output = open(name+".pdf", "wb")
-        # merger.write(output)
-        # for html in self.htmls:
-        #     os.remove(html)
-        # for pdf in self.pdfs:
-        #     os.remove(pdf)
+    def close_spider(self, spider):
+        name = 'Scrapy教程'
+        merger = PdfFileMerger()
+        for pdf in self.pdfs:
+            merger.append(open(pdf, 'rb'))
+        output = open(name+".pdf", "wb")
+        merger.write(output)
+        for html in self.htmls:
+            os.remove(html)
+        for pdf in self.pdfs:
+            os.remove(pdf)
